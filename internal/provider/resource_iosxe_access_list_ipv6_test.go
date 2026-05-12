@@ -32,30 +32,32 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 
-func TestAccIosxePolicyMap(t *testing.T) {
+func TestAccIosxeAccessListIPv6(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_policy_map.test", "name", "POLICY1"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_policy_map.test", "description", "My first policy-map"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_policy_map.test", "classes.0.name", "CLASS1"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_policy_map.test", "classes.0.actions.0.type", "bandwidth"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_policy_map.test", "classes.0.actions.0.bandwidth_percent", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "name", "V6ACL1"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.sequence", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.remark", "Description"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.ace_rule_action", "permit"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.ace_rule_protocol", "tcp"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.source_any", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.destination_any", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccIosxePolicyMapPrerequisitesConfig + testAccIosxePolicyMapConfig_minimum(),
+				Config: testAccIosxeAccessListIPv6Config_minimum(),
 			},
 			{
-				Config: testAccIosxePolicyMapPrerequisitesConfig + testAccIosxePolicyMapConfig_all(),
+				Config: testAccIosxeAccessListIPv6Config_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 			{
-				ResourceName:            "iosxe_policy_map.test",
+				ResourceName:            "iosxe_access_list_ipv6.test",
 				ImportState:             true,
 				ImportStateVerify:       true,
-				ImportStateIdFunc:       iosxePolicyMapImportStateIdFunc("iosxe_policy_map.test"),
-				ImportStateVerifyIgnore: []string{"subscriber", "classes.0.policy_log", "classes.0.actions.0.shape_average_ms", "classes.0.actions.0.police_target_bitrate_conform_transmit", "classes.0.actions.0.police_target_bitrate_exceed_transmit", "classes.0.actions.0.police_target_bitrate_exceed_drop", "classes.0.actions.0.police_cir_conform_transmit", "classes.0.actions.0.police_cir_exceed_drop", "classes.0.actions.0.police_cir_exceed_transmit"},
+				ImportStateIdFunc:       iosxeAccessListIPv6ImportStateIdFunc("iosxe_access_list_ipv6.test"),
+				ImportStateVerifyIgnore: []string{"entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_fragments", "entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_log", "entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_log_input"},
 				Check:                   resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -66,7 +68,7 @@ func TestAccIosxePolicyMap(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin importStateIdFunc
 
-func iosxePolicyMapImportStateIdFunc(resourceName string) resource.ImportStateIdFunc {
+func iosxeAccessListIPv6ImportStateIdFunc(resourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		primary := s.RootModule().Resources[resourceName].Primary
 		Name := primary.Attributes["name"]
@@ -78,25 +80,13 @@ func iosxePolicyMapImportStateIdFunc(resourceName string) resource.ImportStateId
 // End of section. //template:end importStateIdFunc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccIosxePolicyMapPrerequisitesConfig = `
-resource "iosxe_yang" "PreReq0" {
-	path = "/Cisco-IOS-XE-native:native/policy/Cisco-IOS-XE-policy:class-map[name=CLASS1]"
-	attributes = {
-		"name" = "CLASS1"
-		"prematch" = "match-all"
-	}
-}
-
-`
-
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimal
 
-func testAccIosxePolicyMapConfig_minimum() string {
-	config := `resource "iosxe_policy_map" "test" {` + "\n"
-	config += `	name = "POLICY1"` + "\n"
-	config += `	depends_on = [iosxe_yang.PreReq0, ]` + "\n"
+func testAccIosxeAccessListIPv6Config_minimum() string {
+	config := `resource "iosxe_access_list_ipv6" "test" {` + "\n"
+	config += `	name = "V6ACL1"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -105,18 +95,17 @@ func testAccIosxePolicyMapConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 
-func testAccIosxePolicyMapConfig_all() string {
-	config := `resource "iosxe_policy_map" "test" {` + "\n"
-	config += `	name = "POLICY1"` + "\n"
-	config += `	description = "My first policy-map"` + "\n"
-	config += `	classes = [{` + "\n"
-	config += `		name = "CLASS1"` + "\n"
-	config += `		actions = [{` + "\n"
-	config += `			type = "bandwidth"` + "\n"
-	config += `			bandwidth_percent = 10` + "\n"
-	config += `		}]` + "\n"
+func testAccIosxeAccessListIPv6Config_all() string {
+	config := `resource "iosxe_access_list_ipv6" "test" {` + "\n"
+	config += `	name = "V6ACL1"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `		sequence = 10` + "\n"
+	config += `		remark = "Description"` + "\n"
+	config += `		ace_rule_action = "permit"` + "\n"
+	config += `		ace_rule_protocol = "tcp"` + "\n"
+	config += `		source_any = true` + "\n"
+	config += `		destination_any = true` + "\n"
 	config += `	}]` + "\n"
-	config += `	depends_on = [iosxe_yang.PreReq0, ]` + "\n"
 	config += `}` + "\n"
 	return config
 }

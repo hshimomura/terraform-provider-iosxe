@@ -9,6 +9,8 @@ description: |-
 
 ## Unreleased
 
+- Add `iosxe_access_list_ipv6` resource and data source for named IPv6 access-list configuration (`ipv6 access-list`), including sequence entries, remarks, source/destination matching, ports, and ICMPv6 named message types
+- Add `police_cir_exceed_transmit` attribute to `iosxe_policy_map` resource and data source for `police cir ... exceed-action transmit` use cases such as CoPP `class-default`
 - Add `iosxe_ipv6_local_pool` resource and data source for IPv6 local address pool configuration (`ipv6 local pool`), including pool name, start prefix address, assigned prefix length, and pool group
 - Add `iosxe_ipv6_dhcp_pool` resource and data source for IPv6 DHCP pool configuration (`ipv6 dhcp pool`), including prefix delegation (pool and per-prefix), address allocation, DNS servers, domain names, vendor-specific options with suboptions, link addresses, SNTP servers, bootfile URL, information refresh, and import options
 - Add `authenticate_using_authc_list` and `authenticate_using_authz_list` attributes to `iosxe_policy_map_event` resource and data source for the non-deprecated AAA method list leaves (`authenticate/using/authc-list`, `authenticate/using/authz-list`). Rename the existing attributes targeting the deprecated `authenticate/using/aaa` container to `authenticate_using_aaa_authc_list_legacy` and `authenticate_using_aaa_authz_list_legacy`.

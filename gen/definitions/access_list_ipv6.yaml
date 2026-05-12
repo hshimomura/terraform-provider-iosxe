@@ -1,0 +1,166 @@
+---
+name: Access List IPv6
+path: /Cisco-IOS-XE-native:native/ipv6/access-list/Cisco-IOS-XE-acl:named-acl[name=%v]
+no_delete_attributes: true
+doc_category: System
+attributes:
+  - yang_name: name
+    example: V6ACL1
+  - yang_name: access-list-seq-rule
+    tf_name: entries
+    type: List
+    attributes:
+      - yang_name: sequence
+        example: 10
+        id: true
+      - yang_name: ace-rule-remark-choice/remark-case/remark
+        xpath: remark
+        tf_name: remark
+        example: Description
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/action
+        xpath: ace-rule/action
+        tf_name: ace_rule_action
+        example: permit
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/protocol
+        xpath: ace-rule/protocol
+        tf_name: ace_rule_protocol
+        example: tcp
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/object-group
+        tf_name: service_object_group
+        example: SOGV6_1
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/any-case/any
+        xpath: ace-rule/any
+        tf_name: source_any
+        example: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/host-case/source-host
+        xpath: ace-rule/source-host
+        tf_name: source_host
+        example: "2001:db8::1"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/prefix-case/source-prefix
+        xpath: ace-rule/source-prefix
+        tf_name: source_prefix
+        example: "2001:db8::/64"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/address-case/source-address
+        xpath: ace-rule/source-address
+        tf_name: source_address
+        example: "2001:db8::"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/address-case/source-wildcard-bits
+        xpath: ace-rule/source-wildcard-bits
+        tf_name: source_wildcard_bits
+        example: "::ffff:ffff:ffff:ffff"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/source-choice/object-group-case/source-object-group
+        xpath: ace-rule/source-object-group
+        tf_name: source_object_group
+        example: OGV6_1
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/src-port-choice/src-eq-case/src-eq
+        xpath: ace-rule/src-eq
+        tf_name: source_port_equal
+        example: 1000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/src-port-choice/src-gt-case/src-gt
+        xpath: ace-rule/src-gt
+        tf_name: source_port_greater_than
+        example: 1000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/src-port-choice/src-lt-case/src-lt
+        xpath: ace-rule/src-lt
+        tf_name: source_port_lesser_than
+        example: 1000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/src-port-choice/src-range-case/src-range1
+        xpath: ace-rule/src-range1
+        tf_name: source_port_range_from
+        example: 1000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/src-port-choice/src-range-case/src-range2
+        xpath: ace-rule/src-range2
+        tf_name: source_port_range_to
+        example: 2000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/any-case/destination-any
+        xpath: ace-rule/destination-any
+        tf_name: destination_any
+        example: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/host-case/destination-host
+        xpath: ace-rule/destination-host
+        tf_name: destination_host
+        example: "2001:db8::2"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/prefix-case/destination-prefix
+        xpath: ace-rule/destination-prefix
+        tf_name: destination_prefix
+        example: "2001:db8:1::/64"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/address-case/destination-address
+        xpath: ace-rule/destination-address
+        tf_name: destination_address
+        example: "2001:db8:1::"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/address-case/destination-wildcard-bits
+        xpath: ace-rule/destination-wildcard-bits
+        tf_name: destination_wildcard_bits
+        example: "::ffff:ffff:ffff:ffff"
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/destination-choice/object-group-case/destination-object-group
+        xpath: ace-rule/destination-object-group
+        tf_name: destination_object_group
+        example: OGV6_2
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dst-port-choice/dst-eq-case/dst-eq
+        xpath: ace-rule/dst-eq
+        tf_name: destination_port_equal
+        example: 2000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dst-port-choice/dst-gt-case/dst-gt
+        xpath: ace-rule/dst-gt
+        tf_name: destination_port_greater_than
+        example: 2000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dst-port-choice/dst-lt-case/dst-lt
+        xpath: ace-rule/dst-lt
+        tf_name: destination_port_lesser_than
+        example: 2000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dst-port-choice/dst-range-case/dst-range1
+        xpath: ace-rule/dst-range1
+        tf_name: destination_port_range_from
+        example: 2000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dst-port-choice/dst-range-case/dst-range2
+        xpath: ace-rule/dst-range2
+        tf_name: destination_port_range_to
+        example: 3000
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/icmp_choice/named-msg-type-case/named-msg-type
+        xpath: ace-rule/named-msg-type
+        tf_name: icmp_named_msg_type
+        example: echo-request
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/icmp_choice/msg-type-code/msg-type-case
+        xpath: ace-rule/msg-type-case
+        tf_name: icmp_msg_type
+        example: 128
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/icmp_choice/msg-type-code/msg-code
+        xpath: ace-rule/msg-code
+        tf_name: icmp_msg_code
+        example: 0
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dscp
+        example: af11
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/fragments
+        example: true
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/log
+        example: true
+        exclude_test: true
+      - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/log-input
+        example: true
+        exclude_test: true

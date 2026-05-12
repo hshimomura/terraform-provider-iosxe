@@ -23,6 +23,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-iosxe/internal/provider/helpers"
@@ -46,26 +47,26 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces
 var (
-	_ resource.Resource                = &PolicyMapResource{}
-	_ resource.ResourceWithImportState = &PolicyMapResource{}
+	_ resource.Resource                = &AccessListIPv6Resource{}
+	_ resource.ResourceWithImportState = &AccessListIPv6Resource{}
 )
 
-func NewPolicyMapResource() resource.Resource {
-	return &PolicyMapResource{}
+func NewAccessListIPv6Resource() resource.Resource {
+	return &AccessListIPv6Resource{}
 }
 
-type PolicyMapResource struct {
+type AccessListIPv6Resource struct {
 	data *IosxeProviderData
 }
 
-func (r *PolicyMapResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_policy_map"
+func (r *AccessListIPv6Resource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_access_list_ipv6"
 }
 
-func (r *PolicyMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *AccessListIPv6Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This resource can manage the Policy Map configuration.",
+		MarkdownDescription: "This resource can manage the Access List IPv6 configuration.",
 
 		Attributes: map[string]schema.Attribute{
 			"device": schema.StringAttribute{
@@ -80,279 +81,194 @@ func (r *PolicyMapResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Name of the policy map").String,
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("type of the policy-map").AddStringEnumDescription("access-control", "appnav", "control", "epbr", "inspect", "ngsw-qos", "packet-service", "performance-monitor", "queueing", "service", "service-chain", "umbrella").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("access-control", "appnav", "control", "epbr", "inspect", "ngsw-qos", "packet-service", "performance-monitor", "queueing", "service", "service-chain", "umbrella"),
-				},
-			},
-			"subscriber": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Domain name of the policy map").String,
-				Optional:            true,
-			},
-			"description": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Policy-Map description").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.LengthBetween(1, 200),
-				},
-			},
-			"classes": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("policy criteria").String,
+			"entries": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"name": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").String,
+						"sequence": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Sequence number for this entry").AddIntegerRangeDescription(1, 4294967294).String,
 							Required:            true,
-						},
-						"class_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("type of the class-map").AddStringEnumDescription("inspect").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("inspect"),
+							Validators: []validator.Int64{
+								int64validator.Between(1, 4294967294),
 							},
 						},
-						"policy_action": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("cxsc", "drop", "inspect", "pass").String,
+						"remark": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Access list entry comment").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("cxsc", "drop", "inspect", "pass"),
+								stringvalidator.LengthBetween(1, 100),
 							},
 						},
-						"policy_log": schema.BoolAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Send logging message for drop or pass").String,
+						"ace_rule_action": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("deny", "permit").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("deny", "permit"),
+							},
 						},
-						"policy_parameter_map": schema.StringAttribute{
+						"ace_rule_protocol": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
 						},
-						"actions": schema.ListNestedAttribute{
+						"service_object_group": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Service object group name").String,
+							Optional:            true,
+						},
+						"source_any": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							Optional:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("bandwidth", "compression", "dbl", "drop", "estimate", "fair-queue", "forward", "netflow-sampler", "police", "priority", "queue-buffers", "queue-limit", "random-detect", "service-policy", "set", "shape", "trust").String,
-										Required:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("bandwidth", "compression", "dbl", "drop", "estimate", "fair-queue", "forward", "netflow-sampler", "police", "priority", "queue-buffers", "queue-limit", "random-detect", "service-policy", "set", "shape", "trust"),
-										},
-									},
-									"bandwidth_bits": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(1, 100000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 100000000),
-										},
-									},
-									"bandwidth_percent": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("% of total Bandwidth").AddIntegerRangeDescription(1, 100).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 100),
-										},
-									},
-									"bandwidth_remaining_option": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("percent", "ratio").String,
-										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("percent", "ratio"),
-										},
-									},
-									"bandwidth_remaining_percent": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("% of the remaining bandwidth").AddIntegerRangeDescription(1, 100).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 100),
-										},
-									},
-									"bandwidth_remaining_ratio": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("ratio for sharing excess bandwidth").AddIntegerRangeDescription(1, 65536).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 65536),
-										},
-									},
-									"priority_level": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Multi-Level Priority Queue").AddIntegerRangeDescription(1, 2).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 2),
-										},
-									},
-									"priority_burst": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(32, 2000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(32, 2000000),
-										},
-									},
-									"queue_limit": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(1, 64000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 64000000),
-										},
-									},
-									"queue_limit_type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("bytes", "ms", "packets", "us").String,
-										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("bytes", "ms", "packets", "us"),
-										},
-									},
-									"shape_average_bit_rate": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Target Bit Rate (bits/sec)").AddIntegerRangeDescription(1000, 100000000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1000, 100000000000),
-										},
-									},
-									"shape_average_bits_per_interval_sustained": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("bits per interval, sustained. Recommend not to configure, algo finds the best value").AddIntegerRangeDescription(32, 800000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(32, 800000000),
-										},
-									},
-									"shape_average_bits_per_interval_excess": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("bits per interval, excess.").AddIntegerRangeDescription(0, 154400000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 154400000),
-										},
-									},
-									"shape_average_percent": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("% of interface bandwidth for Committed information rate").AddIntegerRangeDescription(0, 100).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 100),
-										},
-									},
-									"shape_average_burst_size_sustained": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value").AddIntegerRangeDescription(10, 2000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(10, 2000),
-										},
-									},
-									"shape_average_ms": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("milliseconds").String,
-										Optional:            true,
-									},
-									"police_target_bitrate_conform_transmit": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("transmit packet").String,
-										Optional:            true,
-									},
-									"police_target_bitrate_exceed_transmit": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("transmit packet").String,
-										Optional:            true,
-									},
-									"police_target_bitrate": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed").AddIntegerRangeDescription(8000, 100000000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(8000, 100000000000),
-										},
-									},
-									"police_target_bitrate_conform_burst_byte": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Burst Byte").AddIntegerRangeDescription(100, 512000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(100, 512000000),
-										},
-									},
-									"police_target_bitrate_excess_burst_byte": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Burst Byte").AddIntegerRangeDescription(100, 512000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(100, 512000000),
-										},
-									},
-									"police_target_bitrate_exceed_drop": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("drop packet").String,
-										Optional:            true,
-									},
-									"police_cir": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Committed information rate").AddIntegerRangeDescription(8000, 100000000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(8000, 100000000000),
-										},
-									},
-									"police_bc": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Conform burst").AddIntegerRangeDescription(1000, 512000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1000, 512000000),
-										},
-									},
-									"police_be": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Excess burst").AddIntegerRangeDescription(1000, 512000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1000, 512000000),
-										},
-									},
-									"police_pir": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Peak Information Rate").AddIntegerRangeDescription(8000, 64000000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(8000, 64000000000),
-										},
-									},
-									"police_pir_be": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Excess burst").AddIntegerRangeDescription(1000, 512000000).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1000, 512000000),
-										},
-									},
-									"police_cir_conform_transmit": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("transmit packet").String,
-										Optional:            true,
-									},
-									"police_cir_exceed_drop": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("drop packet").String,
-										Optional:            true,
-									},
-									"police_cir_exceed_transmit": schema.BoolAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("transmit packet").String,
-										Optional:            true,
-									},
-									"police_rate_percent": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(0, 100).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 100),
-										},
-									},
-									"queue_buffers_ratio": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Relative buffer size for queue").AddIntegerRangeDescription(0, 100).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 100),
-										},
-									},
-									"set_dscp": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").String,
-										Optional:            true,
-									},
-									"service_policy": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").String,
-										Optional:            true,
-									},
-								},
+						},
+						"source_host": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+						},
+						"source_prefix": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(/.+)`), ""),
 							},
+						},
+						"source_address": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%[\p{N}\p{L}]+)?`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?`), ""),
+							},
+						},
+						"source_wildcard_bits": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%[\p{N}\p{L}]+)?`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?`), ""),
+							},
+						},
+						"source_object_group": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Source IPv6 network object group").String,
+							Optional:            true,
+						},
+						"source_port_equal": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets on a given port number up to 10 ports").String,
+							Optional:            true,
+						},
+						"source_port_greater_than": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets with a greater port number").String,
+							Optional:            true,
+						},
+						"source_port_lesser_than": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets with a lower port number").String,
+							Optional:            true,
+						},
+						"source_port_range_from": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets in the range of port numbers").String,
+							Optional:            true,
+						},
+						"source_port_range_to": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets in the range of port numbers").String,
+							Optional:            true,
+						},
+						"destination_any": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+						},
+						"destination_host": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+						},
+						"destination_prefix": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(/.+)`), ""),
+							},
+						},
+						"destination_address": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%[\p{N}\p{L}]+)?`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?`), ""),
+							},
+						},
+						"destination_wildcard_bits": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.RegexMatches(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%[\p{N}\p{L}]+)?`), ""),
+								stringvalidator.RegexMatches(regexp.MustCompile(`(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?`), ""),
+							},
+						},
+						"destination_object_group": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Destination IPv6 network object group").String,
+							Optional:            true,
+						},
+						"destination_port_equal": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets on a given port number up to 10 ports").String,
+							Optional:            true,
+						},
+						"destination_port_greater_than": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets with a greater port number").String,
+							Optional:            true,
+						},
+						"destination_port_lesser_than": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets with a lower port number").String,
+							Optional:            true,
+						},
+						"destination_port_range_from": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets in the range of port numbers").String,
+							Optional:            true,
+						},
+						"destination_port_range_to": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match only packets in the range of port numbers").String,
+							Optional:            true,
+						},
+						"icmp_named_msg_type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("beyond-scope", "destination-unreachable", "dhaad-reply", "dhaad-request", "echo-reply", "echo-request", "header", "hop-limit", "mld-query", "mld-reduction", "mld-report", "mpd-advertisement", "mpd-solicitation", "nd-na", "nd-ns", "next-header", "no-admin", "no-route", "packet-too-big", "parameter-option", "parameter-problem", "port-unreachable", "reassembly-timeout", "redirect", "reject-route", "renum-command", "renum-result", "renum-seq-number", "router-advertisement", "router-renumbering", "router-solicitation", "source-policy", "time-exceeded", "unreachable").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("beyond-scope", "destination-unreachable", "dhaad-reply", "dhaad-request", "echo-reply", "echo-request", "header", "hop-limit", "mld-query", "mld-reduction", "mld-report", "mpd-advertisement", "mpd-solicitation", "nd-na", "nd-ns", "next-header", "no-admin", "no-route", "packet-too-big", "parameter-option", "parameter-problem", "port-unreachable", "reassembly-timeout", "redirect", "reject-route", "renum-command", "renum-result", "renum-seq-number", "router-advertisement", "router-renumbering", "router-solicitation", "source-policy", "time-exceeded", "unreachable"),
+							},
+						},
+						"icmp_msg_type": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(0, 255).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(0, 255),
+							},
+						},
+						"icmp_msg_code": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(0, 255).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(0, 255),
+							},
+						},
+						"ace_rule_remark_choice_ace_rule_case_ace_rule_dscp": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Match packets with given dscp value").String,
+							Optional:            true,
+						},
+						"ace_rule_remark_choice_ace_rule_case_ace_rule_fragments": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Check non-initial fragments").String,
+							Optional:            true,
+						},
+						"ace_rule_remark_choice_ace_rule_case_ace_rule_log": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Log matches against this entry").String,
+							Optional:            true,
+						},
+						"ace_rule_remark_choice_ace_rule_case_ace_rule_log_input": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Log matches against this entry, including input").String,
+							Optional:            true,
 						},
 					},
 				},
@@ -361,7 +277,7 @@ func (r *PolicyMapResource) Schema(ctx context.Context, req resource.SchemaReque
 	}
 }
 
-func (r *PolicyMapResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *AccessListIPv6Resource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -373,8 +289,8 @@ func (r *PolicyMapResource) Configure(_ context.Context, req resource.ConfigureR
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
 
-func (r *PolicyMapResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan, config PolicyMap
+func (r *AccessListIPv6Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan, config AccessListIPv6
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -464,8 +380,8 @@ func (r *PolicyMapResource) Create(ctx context.Context, req resource.CreateReque
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 
-func (r *PolicyMapResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state PolicyMap
+func (r *AccessListIPv6Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state AccessListIPv6
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -491,7 +407,7 @@ func (r *PolicyMapResource) Read(ctx context.Context, req resource.ReadRequest, 
 		if device.Protocol == "restconf" {
 			res, err := device.RestconfClient.GetData(state.Id.ValueString())
 			if res.StatusCode == 404 {
-				state = PolicyMap{Device: state.Device, Id: state.Id}
+				state = AccessListIPv6{Device: state.Device, Id: state.Id}
 			} else {
 				if err != nil {
 					resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (%s), got error: %s", state.Id.ValueString(), err))
@@ -547,8 +463,8 @@ func (r *PolicyMapResource) Read(ctx context.Context, req resource.ReadRequest, 
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
 
-func (r *PolicyMapResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state, config PolicyMap
+func (r *AccessListIPv6Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state, config AccessListIPv6
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -655,8 +571,8 @@ func (r *PolicyMapResource) Update(ctx context.Context, req resource.UpdateReque
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
 
-func (r *PolicyMapResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state PolicyMap
+func (r *AccessListIPv6Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state AccessListIPv6
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -749,7 +665,7 @@ func (r *PolicyMapResource) Delete(ctx context.Context, req resource.DeleteReque
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
 
-func (r *PolicyMapResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *AccessListIPv6Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	idParts := strings.Split(req.ID, ",")
 	idParts = helpers.RemoveEmptyStrings(idParts)
 
@@ -768,7 +684,7 @@ func (r *PolicyMapResource) ImportState(ctx context.Context, req resource.Import
 	}
 
 	// construct path for 'id' attribute
-	var state PolicyMap
+	var state AccessListIPv6
 	diags := resp.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
