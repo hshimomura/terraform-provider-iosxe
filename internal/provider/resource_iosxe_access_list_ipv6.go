@@ -254,19 +254,19 @@ func (r *AccessListIPv6Resource) Schema(ctx context.Context, req resource.Schema
 								int64validator.Between(0, 255),
 							},
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_dscp": schema.StringAttribute{
+						"dscp": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Match packets with given dscp value").String,
 							Optional:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_fragments": schema.BoolAttribute{
+						"fragments": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Check non-initial fragments").String,
 							Optional:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_log": schema.BoolAttribute{
+						"log": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Log matches against this entry").String,
 							Optional:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_log_input": schema.BoolAttribute{
+						"log_input": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Log matches against this entry, including input").String,
 							Optional:            true,
 						},

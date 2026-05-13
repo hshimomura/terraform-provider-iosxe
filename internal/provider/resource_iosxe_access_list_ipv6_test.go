@@ -36,7 +36,6 @@ func TestAccIosxeAccessListIPv6(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "name", "V6ACL1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.sequence", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.remark", "Description"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.ace_rule_action", "permit"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.ace_rule_protocol", "tcp"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_access_list_ipv6.test", "entries.0.source_any", "true"))
@@ -57,7 +56,7 @@ func TestAccIosxeAccessListIPv6(t *testing.T) {
 				ImportState:             true,
 				ImportStateVerify:       true,
 				ImportStateIdFunc:       iosxeAccessListIPv6ImportStateIdFunc("iosxe_access_list_ipv6.test"),
-				ImportStateVerifyIgnore: []string{"entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_fragments", "entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_log", "entries.0.ace_rule_remark_choice_ace_rule_case_ace_rule_log_input"},
+				ImportStateVerifyIgnore: []string{"entries.0.fragments", "entries.0.log", "entries.0.log_input"},
 				Check:                   resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -100,7 +99,6 @@ func testAccIosxeAccessListIPv6Config_all() string {
 	config += `	name = "V6ACL1"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `		sequence = 10` + "\n"
-	config += `		remark = "Description"` + "\n"
 	config += `		ace_rule_action = "permit"` + "\n"
 	config += `		ace_rule_protocol = "tcp"` + "\n"
 	config += `		source_any = true` + "\n"

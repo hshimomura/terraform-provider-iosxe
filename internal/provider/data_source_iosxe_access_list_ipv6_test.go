@@ -33,7 +33,6 @@ import (
 func TestAccDataSourceIosxeAccessListIPv6(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxe_access_list_ipv6.test", "entries.0.sequence", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.iosxe_access_list_ipv6.test", "entries.0.remark", "Description"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxe_access_list_ipv6.test", "entries.0.ace_rule_action", "permit"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxe_access_list_ipv6.test", "entries.0.ace_rule_protocol", "tcp"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxe_access_list_ipv6.test", "entries.0.source_any", "true"))
@@ -62,7 +61,6 @@ func testAccDataSourceIosxeAccessListIPv6Config() string {
 	config += `	name = "V6ACL1"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `		sequence = 10` + "\n"
-	config += `		remark = "Description"` + "\n"
 	config += `		ace_rule_action = "permit"` + "\n"
 	config += `		ace_rule_protocol = "tcp"` + "\n"
 	config += `		source_any = true` + "\n"

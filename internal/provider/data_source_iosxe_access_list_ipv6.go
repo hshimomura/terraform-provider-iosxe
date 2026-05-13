@@ -197,19 +197,19 @@ func (d *AccessListIPv6DataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_dscp": schema.StringAttribute{
+						"dscp": schema.StringAttribute{
 							MarkdownDescription: "Match packets with given dscp value",
 							Computed:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_fragments": schema.BoolAttribute{
+						"fragments": schema.BoolAttribute{
 							MarkdownDescription: "Check non-initial fragments",
 							Computed:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_log": schema.BoolAttribute{
+						"log": schema.BoolAttribute{
 							MarkdownDescription: "Log matches against this entry",
 							Computed:            true,
 						},
-						"ace_rule_remark_choice_ace_rule_case_ace_rule_log_input": schema.BoolAttribute{
+						"log_input": schema.BoolAttribute{
 							MarkdownDescription: "Log matches against this entry, including input",
 							Computed:            true,
 						},

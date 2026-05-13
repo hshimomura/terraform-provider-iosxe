@@ -41,10 +41,6 @@ Read-Only:
 
 - `ace_rule_action` (String)
 - `ace_rule_protocol` (String)
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_dscp` (String) Match packets with given dscp value
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_fragments` (Boolean) Check non-initial fragments
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_log` (Boolean) Log matches against this entry
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_log_input` (Boolean) Log matches against this entry, including input
 - `destination_address` (String)
 - `destination_any` (Boolean)
 - `destination_host` (String)
@@ -56,9 +52,13 @@ Read-Only:
 - `destination_port_range_to` (String) Match only packets in the range of port numbers
 - `destination_prefix` (String)
 - `destination_wildcard_bits` (String)
+- `dscp` (String) Match packets with given dscp value
+- `fragments` (Boolean) Check non-initial fragments
 - `icmp_msg_code` (Number)
 - `icmp_msg_type` (Number)
 - `icmp_named_msg_type` (String)
+- `log` (Boolean) Log matches against this entry
+- `log_input` (Boolean) Log matches against this entry, including input
 - `remark` (String) Access list entry comment
 - `sequence` (Number) Sequence number for this entry
 - `service_object_group` (String) Service object group name

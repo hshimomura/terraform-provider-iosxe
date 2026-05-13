@@ -17,6 +17,7 @@ attributes:
         xpath: remark
         tf_name: remark
         example: Description
+        exclude_test: true
       - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/action
         xpath: ace-rule/action
         tf_name: ace_rule_action
@@ -153,14 +154,22 @@ attributes:
         example: 0
         exclude_test: true
       - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/dscp
+        xpath: ace-rule/dscp
+        tf_name: dscp
         example: af11
         exclude_test: true
       - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/fragments
+        xpath: ace-rule/fragments
+        tf_name: fragments
         example: true
         exclude_test: true
       - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/log
+        xpath: ace-rule/log
+        tf_name: log
         example: true
         exclude_test: true
       - yang_name: ace-rule-remark-choice/ace-rule-case/ace-rule/log-input
+        xpath: ace-rule/log-input
+        tf_name: log_input
         example: true
         exclude_test: true

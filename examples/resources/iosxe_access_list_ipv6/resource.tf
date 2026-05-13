@@ -3,7 +3,6 @@ resource "iosxe_access_list_ipv6" "example" {
   entries = [
     {
       sequence          = 10
-      remark            = "Description"
       ace_rule_action   = "permit"
       ace_rule_protocol = "tcp"
       source_any        = true

@@ -18,7 +18,6 @@ resource "iosxe_access_list_ipv6" "example" {
   entries = [
     {
       sequence          = 10
-      remark            = "Description"
       ace_rule_action   = "permit"
       ace_rule_protocol = "tcp"
       source_any        = true
@@ -56,10 +55,6 @@ Optional:
 
 - `ace_rule_action` (String) - Choices: `deny`, `permit`
 - `ace_rule_protocol` (String)
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_dscp` (String) Match packets with given dscp value
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_fragments` (Boolean) Check non-initial fragments
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_log` (Boolean) Log matches against this entry
-- `ace_rule_remark_choice_ace_rule_case_ace_rule_log_input` (Boolean) Log matches against this entry, including input
 - `destination_address` (String)
 - `destination_any` (Boolean)
 - `destination_host` (String)
@@ -71,9 +66,13 @@ Optional:
 - `destination_port_range_to` (String) Match only packets in the range of port numbers
 - `destination_prefix` (String)
 - `destination_wildcard_bits` (String)
+- `dscp` (String) Match packets with given dscp value
+- `fragments` (Boolean) Check non-initial fragments
 - `icmp_msg_code` (Number) - Range: `0`-`255`
 - `icmp_msg_type` (Number) - Range: `0`-`255`
 - `icmp_named_msg_type` (String) - Choices: `beyond-scope`, `destination-unreachable`, `dhaad-reply`, `dhaad-request`, `echo-reply`, `echo-request`, `header`, `hop-limit`, `mld-query`, `mld-reduction`, `mld-report`, `mpd-advertisement`, `mpd-solicitation`, `nd-na`, `nd-ns`, `next-header`, `no-admin`, `no-route`, `packet-too-big`, `parameter-option`, `parameter-problem`, `port-unreachable`, `reassembly-timeout`, `redirect`, `reject-route`, `renum-command`, `renum-result`, `renum-seq-number`, `router-advertisement`, `router-renumbering`, `router-solicitation`, `source-policy`, `time-exceeded`, `unreachable`
+- `log` (Boolean) Log matches against this entry
+- `log_input` (Boolean) Log matches against this entry, including input
 - `remark` (String) Access list entry comment
 - `service_object_group` (String) Service object group name
 - `source_address` (String)

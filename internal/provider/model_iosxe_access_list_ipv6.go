@@ -48,40 +48,40 @@ type AccessListIPv6 struct {
 	Entries []AccessListIPv6Entries `tfsdk:"entries"`
 }
 type AccessListIPv6Entries struct {
-	Sequence                                       types.Int64  `tfsdk:"sequence"`
-	Remark                                         types.String `tfsdk:"remark"`
-	AceRuleAction                                  types.String `tfsdk:"ace_rule_action"`
-	AceRuleProtocol                                types.String `tfsdk:"ace_rule_protocol"`
-	ServiceObjectGroup                             types.String `tfsdk:"service_object_group"`
-	SourceAny                                      types.Bool   `tfsdk:"source_any"`
-	SourceHost                                     types.String `tfsdk:"source_host"`
-	SourcePrefix                                   types.String `tfsdk:"source_prefix"`
-	SourceAddress                                  types.String `tfsdk:"source_address"`
-	SourceWildcardBits                             types.String `tfsdk:"source_wildcard_bits"`
-	SourceObjectGroup                              types.String `tfsdk:"source_object_group"`
-	SourcePortEqual                                types.String `tfsdk:"source_port_equal"`
-	SourcePortGreaterThan                          types.String `tfsdk:"source_port_greater_than"`
-	SourcePortLesserThan                           types.String `tfsdk:"source_port_lesser_than"`
-	SourcePortRangeFrom                            types.String `tfsdk:"source_port_range_from"`
-	SourcePortRangeTo                              types.String `tfsdk:"source_port_range_to"`
-	DestinationAny                                 types.Bool   `tfsdk:"destination_any"`
-	DestinationHost                                types.String `tfsdk:"destination_host"`
-	DestinationPrefix                              types.String `tfsdk:"destination_prefix"`
-	DestinationAddress                             types.String `tfsdk:"destination_address"`
-	DestinationWildcardBits                        types.String `tfsdk:"destination_wildcard_bits"`
-	DestinationObjectGroup                         types.String `tfsdk:"destination_object_group"`
-	DestinationPortEqual                           types.String `tfsdk:"destination_port_equal"`
-	DestinationPortGreaterThan                     types.String `tfsdk:"destination_port_greater_than"`
-	DestinationPortLesserThan                      types.String `tfsdk:"destination_port_lesser_than"`
-	DestinationPortRangeFrom                       types.String `tfsdk:"destination_port_range_from"`
-	DestinationPortRangeTo                         types.String `tfsdk:"destination_port_range_to"`
-	IcmpNamedMsgType                               types.String `tfsdk:"icmp_named_msg_type"`
-	IcmpMsgType                                    types.Int64  `tfsdk:"icmp_msg_type"`
-	IcmpMsgCode                                    types.Int64  `tfsdk:"icmp_msg_code"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleDscp      types.String `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_dscp"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleFragments types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_fragments"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleLog       types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_log"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput  types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_log_input"`
+	Sequence                   types.Int64  `tfsdk:"sequence"`
+	Remark                     types.String `tfsdk:"remark"`
+	AceRuleAction              types.String `tfsdk:"ace_rule_action"`
+	AceRuleProtocol            types.String `tfsdk:"ace_rule_protocol"`
+	ServiceObjectGroup         types.String `tfsdk:"service_object_group"`
+	SourceAny                  types.Bool   `tfsdk:"source_any"`
+	SourceHost                 types.String `tfsdk:"source_host"`
+	SourcePrefix               types.String `tfsdk:"source_prefix"`
+	SourceAddress              types.String `tfsdk:"source_address"`
+	SourceWildcardBits         types.String `tfsdk:"source_wildcard_bits"`
+	SourceObjectGroup          types.String `tfsdk:"source_object_group"`
+	SourcePortEqual            types.String `tfsdk:"source_port_equal"`
+	SourcePortGreaterThan      types.String `tfsdk:"source_port_greater_than"`
+	SourcePortLesserThan       types.String `tfsdk:"source_port_lesser_than"`
+	SourcePortRangeFrom        types.String `tfsdk:"source_port_range_from"`
+	SourcePortRangeTo          types.String `tfsdk:"source_port_range_to"`
+	DestinationAny             types.Bool   `tfsdk:"destination_any"`
+	DestinationHost            types.String `tfsdk:"destination_host"`
+	DestinationPrefix          types.String `tfsdk:"destination_prefix"`
+	DestinationAddress         types.String `tfsdk:"destination_address"`
+	DestinationWildcardBits    types.String `tfsdk:"destination_wildcard_bits"`
+	DestinationObjectGroup     types.String `tfsdk:"destination_object_group"`
+	DestinationPortEqual       types.String `tfsdk:"destination_port_equal"`
+	DestinationPortGreaterThan types.String `tfsdk:"destination_port_greater_than"`
+	DestinationPortLesserThan  types.String `tfsdk:"destination_port_lesser_than"`
+	DestinationPortRangeFrom   types.String `tfsdk:"destination_port_range_from"`
+	DestinationPortRangeTo     types.String `tfsdk:"destination_port_range_to"`
+	IcmpNamedMsgType           types.String `tfsdk:"icmp_named_msg_type"`
+	IcmpMsgType                types.Int64  `tfsdk:"icmp_msg_type"`
+	IcmpMsgCode                types.Int64  `tfsdk:"icmp_msg_code"`
+	Dscp                       types.String `tfsdk:"dscp"`
+	Fragments                  types.Bool   `tfsdk:"fragments"`
+	Log                        types.Bool   `tfsdk:"log"`
+	LogInput                   types.Bool   `tfsdk:"log_input"`
 }
 
 type AccessListIPv6Data struct {
@@ -91,40 +91,40 @@ type AccessListIPv6Data struct {
 	Entries []AccessListIPv6EntriesData `tfsdk:"entries"`
 }
 type AccessListIPv6EntriesData struct {
-	Sequence                                       types.Int64  `tfsdk:"sequence"`
-	Remark                                         types.String `tfsdk:"remark"`
-	AceRuleAction                                  types.String `tfsdk:"ace_rule_action"`
-	AceRuleProtocol                                types.String `tfsdk:"ace_rule_protocol"`
-	ServiceObjectGroup                             types.String `tfsdk:"service_object_group"`
-	SourceAny                                      types.Bool   `tfsdk:"source_any"`
-	SourceHost                                     types.String `tfsdk:"source_host"`
-	SourcePrefix                                   types.String `tfsdk:"source_prefix"`
-	SourceAddress                                  types.String `tfsdk:"source_address"`
-	SourceWildcardBits                             types.String `tfsdk:"source_wildcard_bits"`
-	SourceObjectGroup                              types.String `tfsdk:"source_object_group"`
-	SourcePortEqual                                types.String `tfsdk:"source_port_equal"`
-	SourcePortGreaterThan                          types.String `tfsdk:"source_port_greater_than"`
-	SourcePortLesserThan                           types.String `tfsdk:"source_port_lesser_than"`
-	SourcePortRangeFrom                            types.String `tfsdk:"source_port_range_from"`
-	SourcePortRangeTo                              types.String `tfsdk:"source_port_range_to"`
-	DestinationAny                                 types.Bool   `tfsdk:"destination_any"`
-	DestinationHost                                types.String `tfsdk:"destination_host"`
-	DestinationPrefix                              types.String `tfsdk:"destination_prefix"`
-	DestinationAddress                             types.String `tfsdk:"destination_address"`
-	DestinationWildcardBits                        types.String `tfsdk:"destination_wildcard_bits"`
-	DestinationObjectGroup                         types.String `tfsdk:"destination_object_group"`
-	DestinationPortEqual                           types.String `tfsdk:"destination_port_equal"`
-	DestinationPortGreaterThan                     types.String `tfsdk:"destination_port_greater_than"`
-	DestinationPortLesserThan                      types.String `tfsdk:"destination_port_lesser_than"`
-	DestinationPortRangeFrom                       types.String `tfsdk:"destination_port_range_from"`
-	DestinationPortRangeTo                         types.String `tfsdk:"destination_port_range_to"`
-	IcmpNamedMsgType                               types.String `tfsdk:"icmp_named_msg_type"`
-	IcmpMsgType                                    types.Int64  `tfsdk:"icmp_msg_type"`
-	IcmpMsgCode                                    types.Int64  `tfsdk:"icmp_msg_code"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleDscp      types.String `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_dscp"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleFragments types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_fragments"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleLog       types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_log"`
-	AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput  types.Bool   `tfsdk:"ace_rule_remark_choice_ace_rule_case_ace_rule_log_input"`
+	Sequence                   types.Int64  `tfsdk:"sequence"`
+	Remark                     types.String `tfsdk:"remark"`
+	AceRuleAction              types.String `tfsdk:"ace_rule_action"`
+	AceRuleProtocol            types.String `tfsdk:"ace_rule_protocol"`
+	ServiceObjectGroup         types.String `tfsdk:"service_object_group"`
+	SourceAny                  types.Bool   `tfsdk:"source_any"`
+	SourceHost                 types.String `tfsdk:"source_host"`
+	SourcePrefix               types.String `tfsdk:"source_prefix"`
+	SourceAddress              types.String `tfsdk:"source_address"`
+	SourceWildcardBits         types.String `tfsdk:"source_wildcard_bits"`
+	SourceObjectGroup          types.String `tfsdk:"source_object_group"`
+	SourcePortEqual            types.String `tfsdk:"source_port_equal"`
+	SourcePortGreaterThan      types.String `tfsdk:"source_port_greater_than"`
+	SourcePortLesserThan       types.String `tfsdk:"source_port_lesser_than"`
+	SourcePortRangeFrom        types.String `tfsdk:"source_port_range_from"`
+	SourcePortRangeTo          types.String `tfsdk:"source_port_range_to"`
+	DestinationAny             types.Bool   `tfsdk:"destination_any"`
+	DestinationHost            types.String `tfsdk:"destination_host"`
+	DestinationPrefix          types.String `tfsdk:"destination_prefix"`
+	DestinationAddress         types.String `tfsdk:"destination_address"`
+	DestinationWildcardBits    types.String `tfsdk:"destination_wildcard_bits"`
+	DestinationObjectGroup     types.String `tfsdk:"destination_object_group"`
+	DestinationPortEqual       types.String `tfsdk:"destination_port_equal"`
+	DestinationPortGreaterThan types.String `tfsdk:"destination_port_greater_than"`
+	DestinationPortLesserThan  types.String `tfsdk:"destination_port_lesser_than"`
+	DestinationPortRangeFrom   types.String `tfsdk:"destination_port_range_from"`
+	DestinationPortRangeTo     types.String `tfsdk:"destination_port_range_to"`
+	IcmpNamedMsgType           types.String `tfsdk:"icmp_named_msg_type"`
+	IcmpMsgType                types.Int64  `tfsdk:"icmp_msg_type"`
+	IcmpMsgCode                types.Int64  `tfsdk:"icmp_msg_code"`
+	Dscp                       types.String `tfsdk:"dscp"`
+	Fragments                  types.Bool   `tfsdk:"fragments"`
+	Log                        types.Bool   `tfsdk:"log"`
+	LogInput                   types.Bool   `tfsdk:"log_input"`
 }
 
 // End of section. //template:end types
@@ -269,22 +269,22 @@ func (data AccessListIPv6) toBody(ctx context.Context, config AccessListIPv6) st
 			if !item.IcmpMsgCode.IsNull() && !item.IcmpMsgCode.IsUnknown() {
 				body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule.msg-code", strconv.FormatInt(item.IcmpMsgCode.ValueInt64(), 10))
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsUnknown() {
-				body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule-remark-choice.ace-rule-case.ace-rule.dscp", item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.ValueString())
+			if !item.Dscp.IsNull() && !item.Dscp.IsUnknown() {
+				body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule.dscp", item.Dscp.ValueString())
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.ValueBool() {
-					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule-remark-choice.ace-rule-case.ace-rule.fragments", map[string]string{})
+			if !item.Fragments.IsNull() && !item.Fragments.IsUnknown() {
+				if item.Fragments.ValueBool() {
+					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule.fragments", map[string]string{})
 				}
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.ValueBool() {
-					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule-remark-choice.ace-rule-case.ace-rule.log", map[string]string{})
+			if !item.Log.IsNull() && !item.Log.IsUnknown() {
+				if item.Log.ValueBool() {
+					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule.log", map[string]string{})
 				}
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.ValueBool() {
-					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule-remark-choice.ace-rule-case.ace-rule.log-input", map[string]string{})
+			if !item.LogInput.IsNull() && !item.LogInput.IsUnknown() {
+				if item.LogInput.ValueBool() {
+					body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"access-list-seq-rule"+"."+strconv.Itoa(index)+"."+"ace-rule.log-input", map[string]string{})
 				}
 			}
 		}
@@ -402,28 +402,28 @@ func (data AccessListIPv6) toBodyXML(ctx context.Context, config AccessListIPv6)
 			if !item.IcmpMsgCode.IsNull() && !item.IcmpMsgCode.IsUnknown() {
 				cBody = helpers.SetFromXPath(cBody, "ace-rule/msg-code", strconv.FormatInt(item.IcmpMsgCode.ValueInt64(), 10))
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsUnknown() {
-				cBody = helpers.SetFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/dscp", item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.ValueString())
+			if !item.Dscp.IsNull() && !item.Dscp.IsUnknown() {
+				cBody = helpers.SetFromXPath(cBody, "ace-rule/dscp", item.Dscp.ValueString())
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.ValueBool() {
-					cBody = helpers.SetFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/fragments", "")
+			if !item.Fragments.IsNull() && !item.Fragments.IsUnknown() {
+				if item.Fragments.ValueBool() {
+					cBody = helpers.SetFromXPath(cBody, "ace-rule/fragments", "")
 				} else {
-					cBody = helpers.RemoveFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/fragments")
+					cBody = helpers.RemoveFromXPath(cBody, "ace-rule/fragments")
 				}
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog.ValueBool() {
-					cBody = helpers.SetFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/log", "")
+			if !item.Log.IsNull() && !item.Log.IsUnknown() {
+				if item.Log.ValueBool() {
+					cBody = helpers.SetFromXPath(cBody, "ace-rule/log", "")
 				} else {
-					cBody = helpers.RemoveFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/log")
+					cBody = helpers.RemoveFromXPath(cBody, "ace-rule/log")
 				}
 			}
-			if !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() && !item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsUnknown() {
-				if item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.ValueBool() {
-					cBody = helpers.SetFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/log-input", "")
+			if !item.LogInput.IsNull() && !item.LogInput.IsUnknown() {
+				if item.LogInput.ValueBool() {
+					cBody = helpers.SetFromXPath(cBody, "ace-rule/log-input", "")
 				} else {
-					cBody = helpers.RemoveFromXPath(cBody, "ace-rule-remark-choice/ace-rule-case/ace-rule/log-input")
+					cBody = helpers.RemoveFromXPath(cBody, "ace-rule/log-input")
 				}
 			}
 			body = helpers.SetRawFromXPath(body, data.getXPath()+"/access-list-seq-rule", cBody.Res())
@@ -631,37 +631,37 @@ func (data *AccessListIPv6) updateFromBody(ctx context.Context, res gjson.Result
 		} else {
 			data.Entries[i].IcmpMsgCode = types.Int64Null()
 		}
-		if value := r.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.dscp"); value.Exists() && !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(value.String())
+		if value := r.Get("ace-rule.dscp"); value.Exists() && !data.Entries[i].Dscp.IsNull() {
+			data.Entries[i].Dscp = types.StringValue(value.String())
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringNull()
+			data.Entries[i].Dscp = types.StringNull()
 		}
-		if value := r.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.fragments"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() {
+		if value := r.Get("ace-rule.fragments"); !data.Entries[i].Fragments.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+				data.Entries[i].Fragments = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				data.Entries[i].Fragments = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolNull()
+			data.Entries[i].Fragments = types.BoolNull()
 		}
-		if value := r.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() {
+		if value := r.Get("ace-rule.log"); !data.Entries[i].Log.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+				data.Entries[i].Log = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				data.Entries[i].Log = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolNull()
+			data.Entries[i].Log = types.BoolNull()
 		}
-		if value := r.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log-input"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() {
+		if value := r.Get("ace-rule.log-input"); !data.Entries[i].LogInput.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+				data.Entries[i].LogInput = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				data.Entries[i].LogInput = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolNull()
+			data.Entries[i].LogInput = types.BoolNull()
 		}
 	}
 }
@@ -857,37 +857,37 @@ func (data *AccessListIPv6) updateFromBodyXML(ctx context.Context, res xmldot.Re
 		} else {
 			data.Entries[i].IcmpMsgCode = types.Int64Null()
 		}
-		if value := helpers.GetFromXPath(r, "ace-rule-remark-choice/ace-rule-case/ace-rule/dscp"); value.Exists() && !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(value.String())
+		if value := helpers.GetFromXPath(r, "ace-rule/dscp"); value.Exists() && !data.Entries[i].Dscp.IsNull() {
+			data.Entries[i].Dscp = types.StringValue(value.String())
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringNull()
+			data.Entries[i].Dscp = types.StringNull()
 		}
-		if value := helpers.GetFromXPath(r, "ace-rule-remark-choice/ace-rule-case/ace-rule/fragments"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() {
+		if value := helpers.GetFromXPath(r, "ace-rule/fragments"); !data.Entries[i].Fragments.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+				data.Entries[i].Fragments = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				data.Entries[i].Fragments = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolNull()
+			data.Entries[i].Fragments = types.BoolNull()
 		}
-		if value := helpers.GetFromXPath(r, "ace-rule-remark-choice/ace-rule-case/ace-rule/log"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() {
+		if value := helpers.GetFromXPath(r, "ace-rule/log"); !data.Entries[i].Log.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+				data.Entries[i].Log = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				data.Entries[i].Log = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolNull()
+			data.Entries[i].Log = types.BoolNull()
 		}
-		if value := helpers.GetFromXPath(r, "ace-rule-remark-choice/ace-rule-case/ace-rule/log-input"); !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() {
+		if value := helpers.GetFromXPath(r, "ace-rule/log-input"); !data.Entries[i].LogInput.IsNull() {
 			if value.Exists() {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+				data.Entries[i].LogInput = types.BoolValue(true)
 			} else {
-				data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				data.Entries[i].LogInput = types.BoolValue(false)
 			}
 		} else {
-			data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolNull()
+			data.Entries[i].LogInput = types.BoolNull()
 		}
 	}
 }
@@ -999,23 +999,23 @@ func (data *AccessListIPv6) fromBody(ctx context.Context, res gjson.Result) {
 			if cValue := v.Get("ace-rule.msg-code"); cValue.Exists() {
 				item.IcmpMsgCode = types.Int64Value(cValue.Int())
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.dscp"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(cValue.String())
+			if cValue := v.Get("ace-rule.dscp"); cValue.Exists() {
+				item.Dscp = types.StringValue(cValue.String())
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.fragments"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.fragments"); cValue.Exists() {
+				item.Fragments = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				item.Fragments = types.BoolValue(false)
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.log"); cValue.Exists() {
+				item.Log = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				item.Log = types.BoolValue(false)
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log-input"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.log-input"); cValue.Exists() {
+				item.LogInput = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				item.LogInput = types.BoolValue(false)
 			}
 			data.Entries = append(data.Entries, item)
 			return true
@@ -1130,23 +1130,23 @@ func (data *AccessListIPv6Data) fromBody(ctx context.Context, res gjson.Result) 
 			if cValue := v.Get("ace-rule.msg-code"); cValue.Exists() {
 				item.IcmpMsgCode = types.Int64Value(cValue.Int())
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.dscp"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(cValue.String())
+			if cValue := v.Get("ace-rule.dscp"); cValue.Exists() {
+				item.Dscp = types.StringValue(cValue.String())
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.fragments"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.fragments"); cValue.Exists() {
+				item.Fragments = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				item.Fragments = types.BoolValue(false)
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.log"); cValue.Exists() {
+				item.Log = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				item.Log = types.BoolValue(false)
 			}
-			if cValue := v.Get("ace-rule-remark-choice.ace-rule-case.ace-rule.log-input"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+			if cValue := v.Get("ace-rule.log-input"); cValue.Exists() {
+				item.LogInput = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				item.LogInput = types.BoolValue(false)
 			}
 			data.Entries = append(data.Entries, item)
 			return true
@@ -1257,23 +1257,23 @@ func (data *AccessListIPv6) fromBodyXML(ctx context.Context, res xmldot.Result) 
 			if cValue := helpers.GetFromXPath(v, "ace-rule/msg-code"); cValue.Exists() {
 				item.IcmpMsgCode = types.Int64Value(cValue.Int())
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/dscp"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(cValue.String())
+			if cValue := helpers.GetFromXPath(v, "ace-rule/dscp"); cValue.Exists() {
+				item.Dscp = types.StringValue(cValue.String())
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/fragments"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/fragments"); cValue.Exists() {
+				item.Fragments = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				item.Fragments = types.BoolValue(false)
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/log"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/log"); cValue.Exists() {
+				item.Log = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				item.Log = types.BoolValue(false)
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/log-input"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/log-input"); cValue.Exists() {
+				item.LogInput = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				item.LogInput = types.BoolValue(false)
 			}
 			data.Entries = append(data.Entries, item)
 			return true
@@ -1384,23 +1384,23 @@ func (data *AccessListIPv6Data) fromBodyXML(ctx context.Context, res xmldot.Resu
 			if cValue := helpers.GetFromXPath(v, "ace-rule/msg-code"); cValue.Exists() {
 				item.IcmpMsgCode = types.Int64Value(cValue.Int())
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/dscp"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleDscp = types.StringValue(cValue.String())
+			if cValue := helpers.GetFromXPath(v, "ace-rule/dscp"); cValue.Exists() {
+				item.Dscp = types.StringValue(cValue.String())
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/fragments"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/fragments"); cValue.Exists() {
+				item.Fragments = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleFragments = types.BoolValue(false)
+				item.Fragments = types.BoolValue(false)
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/log"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/log"); cValue.Exists() {
+				item.Log = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLog = types.BoolValue(false)
+				item.Log = types.BoolValue(false)
 			}
-			if cValue := helpers.GetFromXPath(v, "ace-rule-remark-choice/ace-rule-case/ace-rule/log-input"); cValue.Exists() {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(true)
+			if cValue := helpers.GetFromXPath(v, "ace-rule/log-input"); cValue.Exists() {
+				item.LogInput = types.BoolValue(true)
 			} else {
-				item.AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput = types.BoolValue(false)
+				item.LogInput = types.BoolValue(false)
 			}
 			data.Entries = append(data.Entries, item)
 			return true
@@ -1432,17 +1432,17 @@ func (data *AccessListIPv6) getDeletedItems(ctx context.Context, state AccessLis
 				found = false
 			}
 			if found {
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() {
-					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log-input", state.getPath(), strings.Join(stateKeyValues[:], ",")))
+				if !state.Entries[i].LogInput.IsNull() && data.Entries[j].LogInput.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/log-input", state.getPath(), strings.Join(stateKeyValues[:], ",")))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() {
-					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log", state.getPath(), strings.Join(stateKeyValues[:], ",")))
+				if !state.Entries[i].Log.IsNull() && data.Entries[j].Log.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/log", state.getPath(), strings.Join(stateKeyValues[:], ",")))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() {
-					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/fragments", state.getPath(), strings.Join(stateKeyValues[:], ",")))
+				if !state.Entries[i].Fragments.IsNull() && data.Entries[j].Fragments.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/fragments", state.getPath(), strings.Join(stateKeyValues[:], ",")))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() {
-					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/dscp", state.getPath(), strings.Join(stateKeyValues[:], ",")))
+				if !state.Entries[i].Dscp.IsNull() && data.Entries[j].Dscp.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/dscp", state.getPath(), strings.Join(stateKeyValues[:], ",")))
 				}
 				if !state.Entries[i].IcmpMsgCode.IsNull() && data.Entries[j].IcmpMsgCode.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/msg-code", state.getPath(), strings.Join(stateKeyValues[:], ",")))
@@ -1571,17 +1571,17 @@ func (data *AccessListIPv6) addDeletedItemsXML(ctx context.Context, state Access
 				found = false
 			}
 			if found {
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() {
-					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log-input", predicates))
+				if !state.Entries[i].LogInput.IsNull() && data.Entries[j].LogInput.IsNull() {
+					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule/log-input", predicates))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() {
-					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log", predicates))
+				if !state.Entries[i].Log.IsNull() && data.Entries[j].Log.IsNull() {
+					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule/log", predicates))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() {
-					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule-remark-choice/ace-rule-case/ace-rule/fragments", predicates))
+				if !state.Entries[i].Fragments.IsNull() && data.Entries[j].Fragments.IsNull() {
+					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule/fragments", predicates))
 				}
-				if !state.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() && data.Entries[j].AceRuleRemarkChoiceAceRuleCaseAceRuleDscp.IsNull() {
-					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule-remark-choice/ace-rule-case/ace-rule/dscp", predicates))
+				if !state.Entries[i].Dscp.IsNull() && data.Entries[j].Dscp.IsNull() {
+					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule/dscp", predicates))
 				}
 				if !state.Entries[i].IcmpMsgCode.IsNull() && data.Entries[j].IcmpMsgCode.IsNull() {
 					b = helpers.RemoveFromXPath(b, fmt.Sprintf(state.getXPath()+"/access-list-seq-rule%v/ace-rule/msg-code", predicates))
@@ -1691,14 +1691,14 @@ func (data *AccessListIPv6) getEmptyLeafsDelete(ctx context.Context) []string {
 
 	for i := range data.Entries {
 		keyValues := [...]string{strconv.FormatInt(data.Entries[i].Sequence.ValueInt64(), 10)}
-		if !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.IsNull() && !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLogInput.ValueBool() {
-			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log-input", data.getPath(), strings.Join(keyValues[:], ",")))
+		if !data.Entries[i].LogInput.IsNull() && !data.Entries[i].LogInput.ValueBool() {
+			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/log-input", data.getPath(), strings.Join(keyValues[:], ",")))
 		}
-		if !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.IsNull() && !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleLog.ValueBool() {
-			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/log", data.getPath(), strings.Join(keyValues[:], ",")))
+		if !data.Entries[i].Log.IsNull() && !data.Entries[i].Log.ValueBool() {
+			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/log", data.getPath(), strings.Join(keyValues[:], ",")))
 		}
-		if !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.IsNull() && !data.Entries[i].AceRuleRemarkChoiceAceRuleCaseAceRuleFragments.ValueBool() {
-			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule-remark-choice/ace-rule-case/ace-rule/fragments", data.getPath(), strings.Join(keyValues[:], ",")))
+		if !data.Entries[i].Fragments.IsNull() && !data.Entries[i].Fragments.ValueBool() {
+			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/fragments", data.getPath(), strings.Join(keyValues[:], ",")))
 		}
 		if !data.Entries[i].DestinationAny.IsNull() && !data.Entries[i].DestinationAny.ValueBool() {
 			emptyLeafsDelete = append(emptyLeafsDelete, fmt.Sprintf("%v/access-list-seq-rule=%v/ace-rule/destination-any", data.getPath(), strings.Join(keyValues[:], ",")))
