@@ -11,6 +11,12 @@ description: |-
 
 The IOSXE provider uses **NETCONF** (SSH-based) for device communication.
 
+Strict SSH verification (`insecure = false`) uses go-netconf 0.7.0, including
+the 0.6.1 fix that passes the standard user or system `known_hosts` file to the transport.
+Prepopulate the verified `[address]:830` key before connecting; unknown or wrong
+keys must fail before password authentication. Do not disable verification to
+work around the missing known-hosts lookup in go-netconf 0.6.0.
+
 ### Key NETCONF Features
 
 - **Transactional Commits**: Stage multiple configuration changes in the candidate datastore and commit them atomically
@@ -264,6 +270,22 @@ This combines commit and save operations in a single transaction, ensuring your 
 - [RFC 6241 - Network Configuration Protocol (NETCONF)](https://tools.ietf.org/html/rfc6241)
 - [go-netconf Library Documentation](https://github.com/netascode/go-netconf)
 - [IOS-XE Programmability Guide](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/prog/configuration/1715/b_1715_programmability_cg.html)
+
+### Scoped Prefix List removal
+
+`iosxe_prefix_list` can share the native prefix-lists container with unmanaged
+entries. Use `delete_mode = "attributes"` to remove only the managed names and
+sequence numbers during destroy. The default `all` mode removes the container;
+do not use it when other prefix lists must remain.
+
+### Saving after a lifecycle operation
+
+Use the `iosxe_save_config` action after checking running configuration. This
+checkpoint is explicit and does not add a save resource that forces every plan
+to change. The provider must populate `ConfigureResponse.ActionData` as well as
+resource data so the action receives its configured devices before Invoke.
+This includes the upstream fix from commit `670763cc140b6e17ea73a678a8a079f83bdcf301`.
+
 
 ## See Also
 
