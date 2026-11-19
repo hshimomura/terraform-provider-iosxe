@@ -79,6 +79,10 @@ func (r *InterfaceEthernetResource) Schema(ctx context.Context, req resource.Sch
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"access_session_inherit_disable_autoconf": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Auto Conf").String,
+				Optional:            true,
+			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface type").AddStringEnumDescription("GigabitEthernet", "TwoGigabitEthernet", "FiveGigabitEthernet", "TenGigabitEthernet", "TwentyFiveGigE", "FortyGigabitEthernet", "FiftyGigabitEthernet", "HundredGigE", "TwoHundredGigE", "FourHundredGigE").String,
 				Required:            true,
@@ -535,7 +539,7 @@ func (r *InterfaceEthernetResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"spanning_tree_portfast_trunk": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("(DEPRECATED) Enable portfast on the interface even in trunk mode").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Enable PortFast on trunk ports through the current portfast-v2 leaf").String,
 				Optional:            true,
 			},
 			"spanning_tree_portfast_edge": schema.BoolAttribute{

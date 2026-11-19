@@ -7,6 +7,8 @@ test_tags: [C8000V]
 no_delete: true
 doc_category: Interface
 attributes:
+  - yang_name: access-session/inherit/disable/autoconf
+    example: true
   - yang_name: type
     tf_name: type
     description: Interface type
@@ -318,7 +320,13 @@ attributes:
     example: true
   - yang_name: Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/disable
     example: false
-  - yang_name: Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk
+  - yang_name: Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk
+    tf_name: spanning_tree_portfast_trunk
+    no_augment_config: true
+    xpath: Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk
+    type: Bool
+    type_yang_bool: empty
+    description: Enable PortFast on trunk ports through the current portfast-v2 leaf
     example: true
   - yang_name: Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/edge
     example: false

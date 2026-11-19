@@ -33,6 +33,7 @@ data "iosxe_interface_ethernet" "example" {
 
 ### Read-Only
 
+- `access_session_inherit_disable_autoconf` (Boolean) Auto Conf
 - `arp_timeout` (Number) Set ARP cache timeout
 - `authentication_event_fail_action_authorize_vlan` (Number) Configure Authentication Fail vlan
 - `authentication_event_fail_action_next_method` (Boolean) Move to next authentication method
@@ -165,7 +166,7 @@ data "iosxe_interface_ethernet" "example" {
 - `spanning_tree_portfast` (Boolean) (DEPRECATED) Spanning tree portfast options
 - `spanning_tree_portfast_disable` (Boolean) (DEPRECATED) Disable portfast for this interface
 - `spanning_tree_portfast_edge` (Boolean) (DEPRECATED) Enable portfast edge on the interface
-- `spanning_tree_portfast_trunk` (Boolean) (DEPRECATED) Enable portfast on the interface even in trunk mode
+- `spanning_tree_portfast_trunk` (Boolean) Enable PortFast on trunk ports through the current portfast-v2 leaf
 - `speed_100` (Boolean) 100 Mbps operation
 - `speed_1000` (Boolean) 1000 Mbps operation
 - `speed_10000` (Boolean) 10000 Mbps operation

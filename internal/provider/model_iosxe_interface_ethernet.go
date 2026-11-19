@@ -40,6 +40,7 @@ import (
 type InterfaceEthernet struct {
 	Device                                              types.String                                      `tfsdk:"device"`
 	Id                                                  types.String                                      `tfsdk:"id"`
+	AccessSessionInheritDisableAutoconf                 types.Bool                                        `tfsdk:"access_session_inherit_disable_autoconf"`
 	Type                                                types.String                                      `tfsdk:"type"`
 	Name                                                types.String                                      `tfsdk:"name"`
 	MediaType                                           types.String                                      `tfsdk:"media_type"`
@@ -243,6 +244,7 @@ type InterfaceEthernetHoldQueues struct {
 type InterfaceEthernetData struct {
 	Device                                              types.String                                          `tfsdk:"device"`
 	Id                                                  types.String                                          `tfsdk:"id"`
+	AccessSessionInheritDisableAutoconf                 types.Bool                                            `tfsdk:"access_session_inherit_disable_autoconf"`
 	Type                                                types.String                                          `tfsdk:"type"`
 	Name                                                types.String                                          `tfsdk:"name"`
 	MediaType                                           types.String                                          `tfsdk:"media_type"`
@@ -474,6 +476,13 @@ func (data InterfaceEthernetData) getXPath() string {
 
 func (data InterfaceEthernet) toBodyXML(ctx context.Context, config InterfaceEthernet) string {
 	body := netconf.Body{}
+	if !data.AccessSessionInheritDisableAutoconf.IsNull() && !data.AccessSessionInheritDisableAutoconf.IsUnknown() {
+		if data.AccessSessionInheritDisableAutoconf.ValueBool() {
+			body = helpers.SetFromXPath(body, data.getXPath()+"/access-session/inherit/disable/autoconf", "")
+		} else {
+			body = helpers.RemoveFromXPath(body, data.getXPath()+"/access-session/inherit/disable/autoconf")
+		}
+	}
 	if !data.Name.IsNull() && !data.Name.IsUnknown() {
 		body = helpers.SetFromXPath(body, data.getXPath()+"/name", data.Name.ValueString())
 	}
@@ -875,9 +884,9 @@ func (data InterfaceEthernet) toBodyXML(ctx context.Context, config InterfaceEth
 	}
 	if !data.SpanningTreePortfastTrunk.IsNull() && !data.SpanningTreePortfastTrunk.IsUnknown() {
 		if data.SpanningTreePortfastTrunk.ValueBool() {
-			body = helpers.SetFromXPath(body, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk", "")
+			body = helpers.SetFromXPath(body, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk", "")
 		} else {
-			body = helpers.RemoveFromXPath(body, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk")
+			body = helpers.RemoveFromXPath(body, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk")
 		}
 	}
 	if !data.SpanningTreePortfastEdge.IsNull() && !data.SpanningTreePortfastEdge.IsUnknown() {
@@ -1353,6 +1362,15 @@ func (data InterfaceEthernet) toBodyXML(ctx context.Context, config InterfaceEth
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBodyXML
 
 func (data *InterfaceEthernet) updateFromBodyXML(ctx context.Context, res xmldot.Result) {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/access-session/inherit/disable/autoconf"); !data.AccessSessionInheritDisableAutoconf.IsNull() {
+		if value.Exists() {
+			data.AccessSessionInheritDisableAutoconf = types.BoolValue(true)
+		} else {
+			data.AccessSessionInheritDisableAutoconf = types.BoolValue(false)
+		}
+	} else {
+		data.AccessSessionInheritDisableAutoconf = types.BoolNull()
+	}
 	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/name"); value.Exists() && !data.Name.IsNull() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -2036,7 +2054,7 @@ func (data *InterfaceEthernet) updateFromBodyXML(ctx context.Context, res xmldot
 	} else {
 		data.SpanningTreePortfastDisable = types.BoolNull()
 	}
-	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk"); !data.SpanningTreePortfastTrunk.IsNull() {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk"); !data.SpanningTreePortfastTrunk.IsNull() {
 		if value.Exists() {
 			data.SpanningTreePortfastTrunk = types.BoolValue(true)
 		} else {
@@ -2787,6 +2805,11 @@ func (data *InterfaceEthernet) updateFromBodyXML(ctx context.Context, res xmldot
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBodyXML
 
 func (data *InterfaceEthernet) fromBodyXML(ctx context.Context, res xmldot.Result) {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/access-session/inherit/disable/autoconf"); value.Exists() {
+		data.AccessSessionInheritDisableAutoconf = types.BoolValue(true)
+	} else {
+		data.AccessSessionInheritDisableAutoconf = types.BoolValue(false)
+	}
 	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/media-type"); value.Exists() {
 		data.MediaType = types.StringValue(value.String())
 	}
@@ -3143,7 +3166,7 @@ func (data *InterfaceEthernet) fromBodyXML(ctx context.Context, res xmldot.Resul
 	} else {
 		data.SpanningTreePortfastDisable = types.BoolValue(false)
 	}
-	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk"); value.Exists() {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk"); value.Exists() {
 		data.SpanningTreePortfastTrunk = types.BoolValue(true)
 	} else {
 		data.SpanningTreePortfastTrunk = types.BoolValue(false)
@@ -3552,6 +3575,11 @@ func (data *InterfaceEthernet) fromBodyXML(ctx context.Context, res xmldot.Resul
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBodyDataXML
 
 func (data *InterfaceEthernetData) fromBodyXML(ctx context.Context, res xmldot.Result) {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/access-session/inherit/disable/autoconf"); value.Exists() {
+		data.AccessSessionInheritDisableAutoconf = types.BoolValue(true)
+	} else {
+		data.AccessSessionInheritDisableAutoconf = types.BoolValue(false)
+	}
 	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/media-type"); value.Exists() {
 		data.MediaType = types.StringValue(value.String())
 	}
@@ -3908,7 +3936,7 @@ func (data *InterfaceEthernetData) fromBodyXML(ctx context.Context, res xmldot.R
 	} else {
 		data.SpanningTreePortfastDisable = types.BoolValue(false)
 	}
-	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk"); value.Exists() {
+	if value := helpers.GetFromXPath(res, "data"+data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk"); value.Exists() {
 		data.SpanningTreePortfastTrunk = types.BoolValue(true)
 	} else {
 		data.SpanningTreePortfastTrunk = types.BoolValue(false)
@@ -4712,7 +4740,7 @@ func (data *InterfaceEthernet) addDeletedItemsXML(ctx context.Context, state Int
 		b = helpers.RemoveFromXPath(b, state.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/edge")
 	}
 	if !state.SpanningTreePortfastTrunk.IsNull() && data.SpanningTreePortfastTrunk.IsNull() {
-		b = helpers.RemoveFromXPath(b, state.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk")
+		b = helpers.RemoveFromXPath(b, state.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk")
 	}
 	if !state.SpanningTreePortfastDisable.IsNull() && data.SpanningTreePortfastDisable.IsNull() {
 		b = helpers.RemoveFromXPath(b, state.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/disable")
@@ -5150,6 +5178,9 @@ func (data *InterfaceEthernet) addDeletedItemsXML(ctx context.Context, state Int
 	if !state.MediaType.IsNull() && data.MediaType.IsNull() {
 		b = helpers.RemoveFromXPath(b, state.getXPath()+"/media-type")
 	}
+	if !state.AccessSessionInheritDisableAutoconf.IsNull() && data.AccessSessionInheritDisableAutoconf.IsNull() {
+		b = helpers.RemoveFromXPath(b, state.getXPath()+"/access-session/inherit/disable/autoconf")
+	}
 
 	b = helpers.CleanupRedundantRemoveOperations(b)
 	return b.Res()
@@ -5440,7 +5471,7 @@ func (data *InterfaceEthernet) addDeletePathsXML(ctx context.Context, body strin
 		b = helpers.RemoveFromXPath(b, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/edge")
 	}
 	if !data.SpanningTreePortfastTrunk.IsNull() {
-		b = helpers.RemoveFromXPath(b, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/trunk")
+		b = helpers.RemoveFromXPath(b, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk")
 	}
 	if !data.SpanningTreePortfastDisable.IsNull() {
 		b = helpers.RemoveFromXPath(b, data.getXPath()+"/Cisco-IOS-XE-spanning-tree:spanning-tree/portfast/disable")
@@ -5682,6 +5713,9 @@ func (data *InterfaceEthernet) addDeletePathsXML(ctx context.Context, body strin
 	}
 	if !data.MediaType.IsNull() {
 		b = helpers.RemoveFromXPath(b, data.getXPath()+"/media-type")
+	}
+	if !data.AccessSessionInheritDisableAutoconf.IsNull() {
+		b = helpers.RemoveFromXPath(b, data.getXPath()+"/access-session/inherit/disable/autoconf")
 	}
 
 	b = helpers.CleanupRedundantRemoveOperations(b)

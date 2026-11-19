@@ -68,6 +68,10 @@ func (d *InterfaceEthernetDataSource) Schema(ctx context.Context, req datasource
 				MarkdownDescription: "The path of the retrieved object.",
 				Computed:            true,
 			},
+			"access_session_inherit_disable_autoconf": schema.BoolAttribute{
+				MarkdownDescription: "Auto Conf",
+				Computed:            true,
+			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Interface type",
 				Required:            true,
@@ -430,7 +434,7 @@ func (d *InterfaceEthernetDataSource) Schema(ctx context.Context, req datasource
 				Computed:            true,
 			},
 			"spanning_tree_portfast_trunk": schema.BoolAttribute{
-				MarkdownDescription: "(DEPRECATED) Enable portfast on the interface even in trunk mode",
+				MarkdownDescription: "Enable PortFast on trunk ports through the current portfast-v2 leaf",
 				Computed:            true,
 			},
 			"spanning_tree_portfast_edge": schema.BoolAttribute{

@@ -38,6 +38,7 @@ func TestAccIosxeInterfaceEthernet(t *testing.T) {
 		t.Skip("skipping test, set environment variable C8000V")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("iosxe_interface_ethernet.test", "access_session_inherit_disable_autoconf", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_interface_ethernet.test", "name", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_interface_ethernet.test", "mtu", "1600"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxe_interface_ethernet.test", "bandwidth", "1000000"))
@@ -216,6 +217,7 @@ func testAccIosxeInterfaceEthernetConfig_minimum() string {
 
 func testAccIosxeInterfaceEthernetConfig_all() string {
 	config := `resource "iosxe_interface_ethernet" "test" {` + "\n"
+	config += `	access_session_inherit_disable_autoconf = true` + "\n"
 	config += `	type = "GigabitEthernet"` + "\n"
 	config += `	name = "3"` + "\n"
 	config += `	mtu = 1600` + "\n"

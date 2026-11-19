@@ -14,22 +14,23 @@ This resource can manage the Interface Ethernet configuration.
 
 ```terraform
 resource "iosxe_interface_ethernet" "example" {
-  type                           = "GigabitEthernet"
-  name                           = "3"
-  mtu                            = 1600
-  bandwidth                      = 1000000
-  description                    = "My Interface Description"
-  shutdown                       = false
-  ip_proxy_arp                   = false
-  ip_redirects                   = false
-  ip_unreachables                = false
-  ipv4_address                   = "15.1.1.1"
-  ipv4_address_mask              = "255.255.255.252"
-  ip_dhcp_relay_source_interface = "Loopback100"
-  ip_access_group_in_enable      = true
-  ip_access_group_in             = "1"
-  ip_access_group_out_enable     = true
-  ip_access_group_out            = "1"
+  access_session_inherit_disable_autoconf = true
+  type                                    = "GigabitEthernet"
+  name                                    = "3"
+  mtu                                     = 1600
+  bandwidth                               = 1000000
+  description                             = "My Interface Description"
+  shutdown                                = false
+  ip_proxy_arp                            = false
+  ip_redirects                            = false
+  ip_unreachables                         = false
+  ipv4_address                            = "15.1.1.1"
+  ipv4_address_mask                       = "255.255.255.252"
+  ip_dhcp_relay_source_interface          = "Loopback100"
+  ip_access_group_in_enable               = true
+  ip_access_group_in                      = "1"
+  ip_access_group_out_enable              = true
+  ip_access_group_out                     = "1"
   helper_addresses = [
     {
       address = "10.10.10.10"
@@ -106,6 +107,7 @@ resource "iosxe_interface_ethernet" "example" {
 
 ### Optional
 
+- `access_session_inherit_disable_autoconf` (Boolean) Auto Conf
 - `arp_timeout` (Number) Set ARP cache timeout
   - Range: `0`-`2147483`
 - `authentication_event_fail_action_authorize_vlan` (Number) Configure Authentication Fail vlan
@@ -270,7 +272,7 @@ resource "iosxe_interface_ethernet" "example" {
 - `spanning_tree_portfast` (Boolean) (DEPRECATED) Spanning tree portfast options
 - `spanning_tree_portfast_disable` (Boolean) (DEPRECATED) Disable portfast for this interface
 - `spanning_tree_portfast_edge` (Boolean) (DEPRECATED) Enable portfast edge on the interface
-- `spanning_tree_portfast_trunk` (Boolean) (DEPRECATED) Enable portfast on the interface even in trunk mode
+- `spanning_tree_portfast_trunk` (Boolean) Enable PortFast on trunk ports through the current portfast-v2 leaf
 - `speed_100` (Boolean) 100 Mbps operation
 - `speed_1000` (Boolean) 1000 Mbps operation
 - `speed_10000` (Boolean) 10000 Mbps operation
