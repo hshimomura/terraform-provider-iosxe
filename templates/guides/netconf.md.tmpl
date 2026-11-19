@@ -17,6 +17,18 @@ Prepopulate the verified `[address]:830` key before connecting; unknown or wrong
 keys must fail before password authentication. Do not disable verification to
 work around the missing known-hosts lookup in go-netconf 0.6.0.
 
+### FlexConnect AP ports on current IOS XE
+
+`spanning_tree_portfast_trunk` uses the current
+`Cisco-IOS-XE-spanning-tree:spanning-tree/portfast-v2/trunk` leaf.
+`access_session_inherit_disable_autoconf` excludes an explicitly managed AP
+trunk from global AutoConf. Otherwise the built-in `LAP_INTERFACE_TEMPLATE`
+can override the configured trunk with access mode and port-security.
+Read effective switchport mode, derived configuration, and per-VLAN forwarding;
+a zero-diff NETCONF plan alone does not detect a derived template override.
+Attribute-only removal owns only the configured leaves and preserves the
+physical interface and explicit BPDU Guard.
+
 ### Key NETCONF Features
 
 - **Transactional Commits**: Stage multiple configuration changes in the candidate datastore and commit them atomically
